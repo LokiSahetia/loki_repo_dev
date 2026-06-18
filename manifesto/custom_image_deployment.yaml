@@ -4,20 +4,38 @@ metadata:
   name: flask-custom-deployment
   labels:
     app: flask
+
 spec:
-  replicas: 1
+  replicas: 2
+
   selector:
     matchLabels:
       app: flask
+
   template:
     metadata:
       labels:
         app: flask
+
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "my-app-role"
+
+        vault.hashicorp.com/agent-inject-secret-mysql: "kv/myapp/config"
+
+        vault.hashicorp.com/agent-inject-template-mysql: |
+          {{- with secret "kv/myapp/config" -}}
+          {{ .Data.password }}
+          {{- end }}
+
     spec:
+      serviceAccountName: my-app-sa
+
       containers:
       - name: flask
         image: lokisahetia/loki-flask-app:4
         imagePullPolicy: Always
+
         ports:
         - containerPort: 5000
 ---
