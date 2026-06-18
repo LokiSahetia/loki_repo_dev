@@ -33,7 +33,7 @@ spec:
 
       containers:
       - name: flask
-        image: lokisahetia/loki-flask-app:3
+        image: lokisahetia/loki-flask-app:4
         imagePullPolicy: Always
 
         ports:
