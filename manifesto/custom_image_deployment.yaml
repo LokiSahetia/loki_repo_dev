@@ -19,7 +19,7 @@ spec:
 
       annotations:
         vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/role: "my-app-role"
+        vault.hashicorp.com/role: "flask-role"
 
         vault.hashicorp.com/agent-inject-secret-mysql: "kv/myapp/config"
 
@@ -29,7 +29,7 @@ spec:
           {{- end }}
 
     spec:
-      serviceAccountName: my-app-sa
+      serviceAccountName: flask-sa
 
       containers:
       - name: flask
